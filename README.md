@@ -67,4 +67,4 @@ For more details, check out the [Contributing Guide](CONTRIBUTING.md).
 This project is open-source and available under the [MIT License](LICENSE). ✅
 
 ---
-Made with ❤️ 
+Made with ❤️ by Jivan
