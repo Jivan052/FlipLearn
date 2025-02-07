@@ -1,3 +1,4 @@
+const flipSound = new Audio("flip.ogg");
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
@@ -57,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Flip card
     flipBtn.addEventListener('click', () => {
         cardContainer.classList.toggle('flipped');
+        flipSound.currentTime = 0; // Reset sound to start for multiple flips
+        flipSound.play();
     });
 
     // Delete card
@@ -240,6 +243,9 @@ document.addEventListener('keydown', (e) => {
         updateStarRating(rating);
     }
 });
+
+
+
 
 // Initialize features
 studyTimer.start();
