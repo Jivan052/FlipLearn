@@ -137,10 +137,12 @@ document.addEventListener('keydown', (e) => {
         case 'ArrowRight':
             nextBtn.click();
             break;
-        case ' ':  // Spacebar
-            e.preventDefault();
-            flipBtn.click();
-            break;
+
+        // Removed spacebar handling to allow typing spaces in text inputs
+        // case ' ':  
+        //     e.preventDefault();
+        //     flipBtn.click();
+        //     break;
         case 'Delete':
             if (confirm('Delete this card?')) {
                 deleteBtn.click();
