@@ -190,6 +190,15 @@
         z-index: 10;
     }
 
+    .select__mode__input{
+        margin-top: 60px;
+        padding: 16px;
+        outline: none;
+        border: none;
+        border-radius: 50px;
+        font-size: medium;
+    }
+
     /* Button styles */
     .btn-flip,
     .btn-delete {

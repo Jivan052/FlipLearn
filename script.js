@@ -26,6 +26,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressFill = document.querySelector('.progress-fill');
     const cardsReviewedElement = document.getElementById('cards-reviewed');
     const totalCardsElement = document.getElementById('total-cards');
+    const selectMode = document.getElementById('select__mode');
+    const guessInput = document.querySelector('.select__mode__input');
+    const showAnswerBtn = document.getElementById('show__ans__btn');
+
+
+    window.onload = function() {
+        toggleQuizMode(); // it hide answer input box and show answer btn initially
+    };
+
+
+    //Function to toggle mode UI
+    function toggleQuizMode(){
+        if(selectMode.value === 'quiz'){
+            guessInput.style.display = 'block' // show input field
+            flipBtn.style.display = 'none' // Hide flip button in quiz mode
+            showAnswerBtn.style.display = 'block' // show answer button
+            answerDisplay.style.display = 'none' // Hide answer in quiz mode
+        }
+        else{
+            guessInput.style.display = 'none' // Hide input field
+            flipBtn.style.display = 'block' // show flip button in normal mode
+            showAnswerBtn.style.display = 'none' // Hide "Show Answer" button in normal mode
+            answerDisplay.style.display = 'block' // Show answer in normal mode
+        }
+
+        updateUI() // Refresh UI when mode changes
+    };
+
+    selectMode.addEventListener('change', ()=>{
+        toggleQuizMode();
+    });
 
     // Add new flashcard
     form.addEventListener('submit', (e) => {
@@ -65,6 +96,49 @@ document.addEventListener('DOMContentLoaded', () => {
         cardContainer.classList.toggle('flipped');
         flipSound.currentTime = 0; // Reset sound to start for multiple flips
         flipSound.play();
+    });
+
+
+    // Flip card in quiz mode when answer is correct
+    document.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter'){
+            checkAnswer();
+        }
+    });
+
+
+    function checkAnswer(){
+        if(guessInput.value.trim().toLowerCase() === filteredFlashcards[currentIndex].answer.toLowerCase()){
+            cardContainer.classList.add('flipped');
+            answerDisplay.style.display = 'block';
+            flipSound.currentTime = 0;
+            flipSound.play();
+            guessInput.value = ''  // clear input after correct answer
+            
+            setTimeout(() => {
+                cardContainer.classList.remove('flipped');
+                answerDisplay.style.display = 'none';
+            }, 2000)
+
+            setTimeout(() => {
+                nextBtn.click();
+            }, 3000);
+            
+        }
+    };
+
+
+    // Show answer in quiz mode
+    showAnswerBtn.addEventListener('click', () => {
+        answerDisplay.style.display = 'block';
+        cardContainer.classList.add('flipped');
+        flipSound.currentTime = 0;
+        flipSound.play();
+
+        setTimeout(() =>{
+            cardContainer.classList.remove('flipped');
+            answerDisplay.style.display = 'none';
+        }, 1000)
     });
 
     // Delete card
