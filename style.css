@@ -59,7 +59,7 @@
     }
 
     textarea {
-        min-height: 100px;
+        min-height:60px;
     }
 
     /* Button styles */
@@ -103,7 +103,7 @@
         border: none;
         border-radius: 20px;
         background: var(--glass);
-        color: white;
+        color:white;
         cursor: pointer;
         transition: all 0.3s;
     }
@@ -204,6 +204,13 @@
 
     .btn-flip:hover {
         background: var(--primary);
+    }
+    .btn-flip{
+        margin-left: -120px;
+    }
+    .btn-delete{
+        margin-left: 180px;
+        margin-top: -58px;
     }
 
     /* CHANGED THE BACKGROUND COLOR OF DELETE BUTTON */
