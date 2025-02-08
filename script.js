@@ -36,6 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
         <input type="color" id="card-text-color" value="#ffffff">
     `;
 
+  // Shuffle Button
+  const shuffleBtn = document.createElement("button");
+  shuffleBtn.innerHTML = '<i class="fas fa-random"></i> Shuffle';
+  shuffleBtn.classList.add("nav-btn");
+  document.querySelector(".navigation").appendChild(shuffleBtn);
+
+  // Function to shuffle an array using Fisher-Yates algorithm
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  shuffleBtn.addEventListener("click", () => {
+    if (flashcards.length > 0) {
+      shuffleArray(flashcards);
+      currentIndex = 0;
+      updateUI();
+      showNotification("Cards shuffled successfully!");
+    }
+  });
+
   // Insert color picker before the Add Card button
   const addCardBtn = form.querySelector(".btn-add");
   form.insertBefore(colorPicker, addCardBtn);
@@ -76,6 +99,89 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("card-text-color").value = defaultTheme.text;
 
     showNotification("Card added successfully!");
+  });
+
+  // Initialize EmailJS (if you haven't added this to your HTML)
+  emailjs.init("e2OCOVFgr4yXPNREB");
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // State
+    let flashcards = JSON.parse(localStorage.getItem("flashcards")) || [];
+    let currentIndex = 0;
+    let cardsReviewed = 0;
+
+    const defaultTheme = {
+      background: "#1a3a3b",
+      text: "#ffffff",
+    };
+
+    // DOM Elements
+    const form = document.getElementById("flashcard-form");
+    const cardContainer = document.querySelector(".card-inner");
+    const questionDisplay = document.querySelector(".question");
+    const answerDisplay = document.querySelector(".answer");
+    const categoryTag = document.querySelector(".category-tag");
+    const flipBtn = document.getElementById("flip-btn");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const deleteBtn = document.getElementById("delete-btn");
+    const cardCount = document.getElementById("card-count");
+    const filterCategory = document.getElementById("filter-category");
+    const progressFill = document.querySelector(".progress-fill");
+    const cardsReviewedElement = document.getElementById("cards-reviewed");
+    const totalCardsElement = document.getElementById("total-cards");
+
+    // Shuffle Button
+    const shuffleBtn = document.createElement("button");
+    shuffleBtn.innerHTML = '<i class="fas fa-random"></i> Shuffle';
+    shuffleBtn.classList.add("nav-btn");
+    document.querySelector(".navigation").appendChild(shuffleBtn);
+
+    // Function to shuffle an array using Fisher-Yates algorithm
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffleBtn.addEventListener("click", () => {
+      if (flashcards.length > 0) {
+        shuffleArray(flashcards);
+        currentIndex = 0;
+        updateUI();
+        showNotification("Cards shuffled successfully!");
+      }
+    });
+
+    // Function to update UI
+    function updateUI() {
+      if (flashcards.length === 0) {
+        questionDisplay.textContent = "No cards available";
+        answerDisplay.textContent = "Add some cards to begin";
+        categoryTag.textContent = "Empty";
+        cardCount.textContent = "0/0";
+      } else {
+        const currentCard = flashcards[currentIndex];
+        questionDisplay.textContent = currentCard.question;
+        answerDisplay.textContent = currentCard.answer;
+        categoryTag.textContent = currentCard.category;
+        cardCount.textContent = `${currentIndex + 1}/${flashcards.length}`;
+      }
+    }
+
+    // Shuffle Notification function
+    function showNotification(message) {
+      const notification = document.createElement("div");
+      notification.className = "notification";
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        notification.remove();
+      }, 2000);
+    }
+
+    updateUI();
   });
 
   // Navigation handlers
