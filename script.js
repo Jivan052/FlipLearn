@@ -1,8 +1,13 @@
+const selectMode = document.getElementById('select-mode')
+
 const flipSound = new Audio("flip.ogg");
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
-    let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [];
+    let flashcards = JSON.parse(localStorage.getItem('flashcards')) || []; //Extract Flashcards from locale storage.When receiving data from a web server, the data is always a string.Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+    let filteredFlashcards = [...flashcards];
     let currentIndex = 0;
     let cardsReviewed = 0;
 
@@ -32,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newCard = { category, question, answer };
         flashcards.push(newCard);
         saveToLocalStorage();
-        updateUI();
+        applyFilterCategory() // update UI new card
         form.reset();
 
         showNotification('Card added successfully!');
@@ -70,41 +75,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentIndex = Math.max(0, flashcards.length - 1);
             }
             saveToLocalStorage();
-            updateUI();
+            applyFilterCategory() // Refresh UI after deletion
             showNotification('Card deleted!');
         }
     });
 
-    // Filter by category
-    filterCategory.addEventListener('change', () => {
+    // Apply Filter by category
+    function applyFilterCategory(){
+        const selectedCategory = filterCategory.value;
+
+        filteredFlashcards = selectedCategory === 'all' ? 
+        [...flashcards] : flashcards.filter((cards) => cards.category === selectedCategory);
+
         currentIndex = 0;
         updateUI();
-    });
+    }
+
+    
 
     // Update UI
     function updateUI() {
-        if (flashcards.length === 0) {
+        if (filteredFlashcards.length === 0) {
             questionDisplay.textContent = 'No cards available';
             answerDisplay.textContent = 'Add some cards to begin';
             categoryTag.textContent = 'Empty';
             cardCount.textContent = '0/0';
         } else {
-            const currentCard = flashcards[currentIndex];
+            const currentCard = filteredFlashcards[currentIndex];
             questionDisplay.textContent = currentCard.question;
             answerDisplay.textContent = currentCard.answer;
             categoryTag.textContent = currentCard.category;
-            cardCount.textContent = `${currentIndex + 1}/${flashcards.length}`;
+            cardCount.textContent = `${currentIndex + 1}/${filteredFlashcards.length}`;
         }
 
+        // Listen for category filter changes
+        filterCategory.addEventListener('change', () => {
+            applyFilterCategory();
+        })
+
         // Update stats
-        totalCardsElement.textContent = flashcards.length;
+        totalCardsElement.textContent = filteredFlashcards.length;
         updateProgress();
     }
 
     // Update progress
     function updateProgress() {
         cardsReviewedElement.textContent = cardsReviewed;
-        const progress = (cardsReviewed / flashcards.length) * 100;
+        const progress = (cardsReviewed / filteredFlashcards.length) * 100;
         progressFill.style.width = `${progress}%`;
     }
 
@@ -229,7 +246,7 @@ document.getElementById('importBtn').addEventListener('click', () => {
         reader.onload = (event) => {
             flashcards = JSON.parse(event.target.result);
             saveToLocalStorage();
-            updateUI();
+            applyFilterCategory();
         };
         reader.readAsText(file);
     };
