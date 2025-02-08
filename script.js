@@ -59,6 +59,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Prevent Spacebar from Flipping Card when Typing
+  document.addEventListener("keydown", (e) => {
+    const activeElement = document.activeElement;
+    if (
+      e.key === " " &&
+      (activeElement.tagName === "INPUT" ||
+        activeElement.tagName === "TEXTAREA")
+    ) {
+      e.stopPropagation();
+    }
+  });
+
   // Text-to-Speech Functionality with Enhanced Voice Quality
   function speakText(text) {
     const speech = new SpeechSynthesisUtterance(text);
