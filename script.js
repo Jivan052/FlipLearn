@@ -2,7 +2,8 @@ const flipSound = new Audio("flip.ogg");
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
-    let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [];
+    let flashcards = JSON.parse(localStorage.getItem('flashcards')) || []; //Extract Flashcards from locale storage.When receiving data from a web server, the data is always a string.Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+    let filteredFlashcards = [...flashcards]; 
     let currentIndex = 0;
     let cardsReviewed = 0;
 
@@ -17,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('next-btn');
     const deleteBtn = document.getElementById('delete-btn');
     const cardCount = document.getElementById('card-count');
-    const filterCategory = document.getElementById('filter-category');
     const progressFill = document.querySelector('.progress-fill');
     const cardsReviewedElement = document.getElementById('cards-reviewed');
     const totalCardsElement = document.getElementById('total-cards');
@@ -76,6 +76,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Filter by category
+    const filterCategory = document.getElementById('filter-category');
+    
+    // Apply category filter
+    function applyCategoryFilter(){
+        const selectedCategory = filterCategory.value;
+
+        // filter the loaded flashcards
+        filteredFlashcards = (selectedCategory === 'all') ? [...flashcards] : flashcards.filter(cards => cards.category === selectedCategory);
+
+        currentIndex = 0;
+        updateUI();
+    }
+
+    
+    
+    
     filterCategory.addEventListener('change', () => {
         currentIndex = 0;
         updateUI();
@@ -83,22 +99,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update UI
     function updateUI() {
-        if (flashcards.length === 0) {
+        if (filteredFlashcards.length === 0) {
             questionDisplay.textContent = 'No cards available';
             answerDisplay.textContent = 'Add some cards to begin';
             categoryTag.textContent = 'Empty';
             cardCount.textContent = '0/0';
         } else {
-            const currentCard = flashcards[currentIndex];
+            const currentCard = filteredFlashcards[currentIndex];
             questionDisplay.textContent = currentCard.question;
             answerDisplay.textContent = currentCard.answer;
             categoryTag.textContent = currentCard.category;
-            cardCount.textContent = `${currentIndex + 1}/${flashcards.length}`;
+            cardCount.textContent = `${currentIndex + 1}/${filteredFlashcards.length}`;
         }
 
         // Update stats
-        totalCardsElement.textContent = flashcards.length;
+        totalCardsElement.textContent = filteredFlashcards.length;
         updateProgress();
+
+         // Listen for category filter changes
+         filterCategory.addEventListener('change', () =>{
+            applyCategoryFilter();
+         })
     }
 
     // Update progress
