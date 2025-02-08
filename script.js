@@ -1,4 +1,8 @@
+const selectMode = document.getElementById('select-mode')
+
 const flipSound = new Audio("flip.ogg");
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
@@ -33,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newCard = { category, question, answer };
         flashcards.push(newCard);
         saveToLocalStorage();
-        updateUI();
+        applyFilterCategory() // update UI new card
         form.reset();
 
         showNotification('Card added successfully!');
@@ -71,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentIndex = Math.max(0, flashcards.length - 1);
             }
             saveToLocalStorage();
-            updateUI();
+            applyFilterCategory() // Refresh UI after deletion
             showNotification('Card deleted!');
         }
     });
@@ -80,17 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyFilterCategory(){
         const selectedCategory = filterCategory.value;
 
-        filteredFlashcards = (selectedCategory === 'all') ? [...flashcards] : flashcards.filter(cards => cards.category === selectedCategory);
+        filteredFlashcards = selectedCategory === 'all' ? 
+        [...flashcards] : flashcards.filter((cards) => cards.category === selectedCategory);
 
         currentIndex = 0;
         updateUI();
     }
 
-    // filterCategory.addEventListener('change', () => {
-        
-
-    //     updateUI();
-    // });
+    
 
     // Update UI
     function updateUI() {
@@ -120,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update progress
     function updateProgress() {
         cardsReviewedElement.textContent = cardsReviewed;
-        const progress = (cardsReviewed / flashcards.length) * 100;
+        const progress = (cardsReviewed / filteredFlashcards.length) * 100;
         progressFill.style.width = `${progress}%`;
     }
 
@@ -245,7 +246,7 @@ document.getElementById('importBtn').addEventListener('click', () => {
         reader.onload = (event) => {
             flashcards = JSON.parse(event.target.result);
             saveToLocalStorage();
-            updateUI();
+            applyFilterCategory();
         };
         reader.readAsText(file);
     };
