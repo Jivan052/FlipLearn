@@ -59,6 +59,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Text-to-Speech Functionality with Enhanced Voice Quality
+  function speakText(text) {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 0.9; // Adjust speech rate for better clarity
+    speech.pitch = 1.1; // Slightly adjust pitch for a more natural tone
+    speech.volume = 1; // Ensure full volume
+    window.speechSynthesis.speak(speech);
+  }
+
+  // Add pronunciation buttons
+  const speakQuestionBtn = document.createElement("button");
+  speakQuestionBtn.innerHTML =
+    '<i class="fas fa-volume-up"></i> Speak Question';
+  speakQuestionBtn.classList.add("nav-btn");
+  speakQuestionBtn.addEventListener("click", () => {
+    speakText(questionDisplay.textContent);
+  });
+
+  // const speakAnswerBtn = document.createElement("button");
+  // speakAnswerBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speak Answer';
+  // speakAnswerBtn.classList.add("nav-btn");
+  // speakAnswerBtn.addEventListener("click", () => {
+  //   speakText(answerDisplay.textContent);
+  // });
+
+  document.querySelector(".navigation").appendChild(speakQuestionBtn);
+  document.querySelector(".navigation").appendChild(speakAnswerBtn);
+
   // Insert color picker before the Add Card button
   const addCardBtn = form.querySelector(".btn-add");
   form.insertBefore(colorPicker, addCardBtn);
