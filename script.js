@@ -59,18 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Prevent Spacebar from Flipping Card when Typing
-  document.addEventListener("keydown", (e) => {
-    const activeElement = document.activeElement;
-    if (
-      e.key === " " &&
-      (activeElement.tagName === "INPUT" ||
-        activeElement.tagName === "TEXTAREA")
-    ) {
-      e.stopPropagation();
-    }
-  });
-
   // Text-to-Speech Functionality with Enhanced Voice Quality
   function speakText(text) {
     const speech = new SpeechSynthesisUtterance(text);
@@ -90,12 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
     speakText(questionDisplay.textContent);
   });
 
-  // const speakAnswerBtn = document.createElement("button");
-  // speakAnswerBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speak Answer';
-  // speakAnswerBtn.classList.add("nav-btn");
-  // speakAnswerBtn.addEventListener("click", () => {
-  //   speakText(answerDisplay.textContent);
-  // });
+  const speakAnswerBtn = document.createElement("button");
+  speakAnswerBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speak Answer';
+  speakAnswerBtn.classList.add("nav-btn");
+  speakAnswerBtn.addEventListener("click", () => {
+    speakText(answerDisplay.textContent);
+  });
 
   document.querySelector(".navigation").appendChild(speakQuestionBtn);
   document.querySelector(".navigation").appendChild(speakAnswerBtn);
@@ -110,6 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
   feedbackBtn.className = "btn-add";
   feedbackBtn.innerHTML = '<i class="fas fa-comment"></i> Give Feedback';
   statsSection.appendChild(feedbackBtn);
+
+  // Prevent Spacebar from Flipping Card when Typing
+  document.addEventListener("keydown", (e) => {
+    const activeElement = document.activeElement;
+    if (
+      e.key === " " &&
+      (activeElement.tagName === "INPUT" ||
+        activeElement.tagName === "TEXTAREA")
+    ) {
+      e.stopPropagation();
+    }
+  });
 
   // Add new flashcard
   form.addEventListener("submit", (e) => {
