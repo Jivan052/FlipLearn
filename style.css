@@ -437,6 +437,8 @@ option {
     padding: 10px;
 }
 
+/* Added Responsiveness for all devices */
+
 @media screen and (max-width: 1024px) {
     .container {
         flex-direction: column;
