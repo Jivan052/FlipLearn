@@ -2,7 +2,8 @@ const flipSound = new Audio("flip.ogg");
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
-    let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [];
+    let flashcards = JSON.parse(localStorage.getItem('flashcards')) || []; //Extract Flashcards from locale storage.When receiving data from a web server, the data is always a string.Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+    let filteredFlashcards = [...flashcards];
     let currentIndex = 0;
     let cardsReviewed = 0;
 
@@ -75,29 +76,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Filter by category
-    filterCategory.addEventListener('change', () => {
+    // Apply Filter by category
+    function applyFilterCategory(){
+        const selectedCategory = filterCategory.value;
+
+        filteredFlashcards = (selectedCategory === 'all') ? [...flashcards] : flashcards.filter(cards => cards.category === selectedCategory);
+
         currentIndex = 0;
         updateUI();
-    });
+    }
+
+    // filterCategory.addEventListener('change', () => {
+        
+
+    //     updateUI();
+    // });
 
     // Update UI
     function updateUI() {
-        if (flashcards.length === 0) {
+        if (filteredFlashcards.length === 0) {
             questionDisplay.textContent = 'No cards available';
             answerDisplay.textContent = 'Add some cards to begin';
             categoryTag.textContent = 'Empty';
             cardCount.textContent = '0/0';
         } else {
-            const currentCard = flashcards[currentIndex];
+            const currentCard = filteredFlashcards[currentIndex];
             questionDisplay.textContent = currentCard.question;
             answerDisplay.textContent = currentCard.answer;
             categoryTag.textContent = currentCard.category;
-            cardCount.textContent = `${currentIndex + 1}/${flashcards.length}`;
+            cardCount.textContent = `${currentIndex + 1}/${filteredFlashcards.length}`;
         }
 
+        // Listen for category filter changes
+        filterCategory.addEventListener('change', () => {
+            applyFilterCategory();
+        })
+
         // Update stats
-        totalCardsElement.textContent = flashcards.length;
+        totalCardsElement.textContent = filteredFlashcards.length;
         updateProgress();
     }
 
