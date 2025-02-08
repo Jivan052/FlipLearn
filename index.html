@@ -11,6 +11,21 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <script>
+      // Check if this is the first visit
+      function checkFirstVisit() {
+        const hasVisited = localStorage.getItem('hasVisitedBefore');
+        
+        if (!hasVisited) {
+          // First visit - set the flag and redirect to landing page
+          localStorage.setItem('hasVisitedBefore', 'true');
+          window.location.href = 'landing.html';
+        }
+      }
+
+      // Run the check immediately
+      checkFirstVisit();
+    </script>
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
