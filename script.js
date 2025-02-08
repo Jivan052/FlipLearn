@@ -1,4 +1,5 @@
-const flipSound = new Audio("flip.ogg");
+// Initialize EmailJS (if you haven't added this to your HTML)
+emailjs.init("e2OCOVFgr4yXPNREB");
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
@@ -21,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressFill = document.querySelector('.progress-fill');
     const cardsReviewedElement = document.getElementById('cards-reviewed');
     const totalCardsElement = document.getElementById('total-cards');
+
+    // Add feedback button to the sidebar
+    const statsSection = document.querySelector('.stats');
+    const feedbackBtn = document.createElement('button');
+    feedbackBtn.className = 'btn-add';
+    feedbackBtn.innerHTML = '<i class="fas fa-comment"></i> Give Feedback';
+    statsSection.appendChild(feedbackBtn);
 
     // Add new flashcard
     form.addEventListener('submit', (e) => {
@@ -58,8 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Flip card
     flipBtn.addEventListener('click', () => {
         cardContainer.classList.toggle('flipped');
-        flipSound.currentTime = 0; // Reset sound to start for multiple flips
-        flipSound.play();
     });
 
     // Delete card
@@ -113,10 +119,94 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('flashcards', JSON.stringify(flashcards));
     }
 
-    // Show notification
-    function showNotification(message) {
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        switch(e.key) {
+            case 'ArrowLeft':
+                prevBtn.click();
+                break;
+            case 'ArrowRight':
+                nextBtn.click();
+                break;
+            case ' ':  // Spacebar
+                e.preventDefault();
+                flipBtn.click();
+                break;
+            case 'Delete':
+                if (confirm('Delete this card?')) {
+                    deleteBtn.click();
+                }
+                break;
+        }
+    });
+
+    // Feedback Modal Functionality
+    const modal = document.getElementById('feedback-modal');
+    const closeBtn = document.querySelector('.close-btn');
+    const feedbackForm = document.getElementById('feedback-form');
+
+    feedbackBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Feedback Form Submission
+    feedbackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitButton = feedbackForm.querySelector('.btn-submit');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+
+        const type = document.getElementById('feedback-type').value;
+        const subject = document.getElementById('feedback-subject').value;
+        const message = document.getElementById('feedback-message').value;
+        const email = document.getElementById('feedback-email').value;
+
+        // Prepare template parameters
+        const templateParams = {
+            feedback_type: type,
+            subject: subject,
+            message: message,
+            user_email: email
+        };
+
+        try {
+            // Send email using EmailJS
+            await emailjs.send(
+                'service_qu5w5lj', // Add your EmailJS service ID
+                'template_9httnqo', // Add your EmailJS template ID
+                templateParams
+            );
+
+            showNotification('Feedback sent successfully!');
+            feedbackForm.reset();
+            modal.style.display = 'none';
+        } catch (error) {
+            showNotification('Error sending feedback. Please try again.', true);
+            console.error('EmailJS Error:', error);
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send Feedback';
+        }
+    });
+
+    // Enhanced notification function
+    function showNotification(message, isError = false) {
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notification => notification.remove());
+
         const notification = document.createElement('div');
-        notification.className = 'notification';
+        notification.className = `notification ${isError ? 'notification-error' : ''}`;
         notification.textContent = message;
         document.body.appendChild(notification);
 
@@ -125,128 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Initialize
+    // Initialize the UI
     updateUI();
 });
-// Add to script.js
-document.addEventListener('keydown', (e) => {
-    switch(e.key) {
-        case 'ArrowLeft':
-            prevBtn.click();
-            break;
-        case 'ArrowRight':
-            nextBtn.click();
-            break;
-        case ' ':  // Spacebar
-            e.preventDefault();
-            flipBtn.click();
-            break;
-        case 'Delete':
-            if (confirm('Delete this card?')) {
-                deleteBtn.click();
-            }
-            break;
-    }
-});
-// Add to existing script.js
-const studyTimer = {
-    startTime: null,
-    interval: null,
-    element: document.getElementById('studyTimer'),
-    
-    start() {
-        this.startTime = Date.now();
-        this.interval = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            this.element.textContent = `Study time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }, 1000);
-    },
-    
-    stop() {
-        clearInterval(this.interval);
-    }
-};
-
-// Difficulty rating
-document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('click', () => {
-        const rating = parseInt(star.dataset.rating);
-        const cardId = flashcards[currentIndex].id;
-        flashcards[currentIndex].difficulty = rating;
-        updateStarRating(rating);
-        saveToLocalStorage();
-    });
-});
-
-function updateStarRating(rating) {
-    document.querySelectorAll('.star').forEach(star => {
-        const starRating = parseInt(star.dataset.rating);
-        star.classList.toggle('active', starRating <= rating);
-    });
-}
-
-// Tags management
-document.getElementById('tags').addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        const tags = e.target.value.split(',').map(tag => tag.trim());
-        flashcards[currentIndex].tags = tags;
-        updateTags();
-        saveToLocalStorage();
-        e.target.value = '';
-    }
-});
-
-function updateTags() {
-    const tagsContainer = document.getElementById('cardTags');
-    const tags = flashcards[currentIndex].tags || [];
-    tagsContainer.innerHTML = tags.map(tag => `
-        <span class="tag">${tag}</span>
-    `).join('');
-}
-
-// Export/Import functionality
-document.getElementById('exportBtn').addEventListener('click', () => {
-    const data = JSON.stringify(flashcards);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'flashcards.json';
-    a.click();
-});
-
-document.getElementById('importBtn').addEventListener('click', () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            flashcards = JSON.parse(event.target.result);
-            saveToLocalStorage();
-            updateUI();
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-});
-
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-    if (e.key === '?') {
-        document.querySelector('.shortcuts-help').classList.toggle('visible');
-    } else if (e.key >= '1' && e.key <= '3') {
-        const rating = parseInt(e.key);
-        updateStarRating(rating);
-    }
-});
-
-
-
-
-// Initialize features
-studyTimer.start();
-updateTags();
