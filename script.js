@@ -252,3 +252,5 @@ document.addEventListener('keydown', (e) => {
 // Initialize features
 studyTimer.start();
 updateTags();
+
+
