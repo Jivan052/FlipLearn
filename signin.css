@@ -111,3 +111,26 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background: #2ecc71;
 }
+
+#success-message{
+    color: white;
+    text-align: center;
+}
+
+#success-message p {
+    margin-bottom: 7px;
+}
+.btn-home {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-home:hover {
+    background: #2ecc71;
+}

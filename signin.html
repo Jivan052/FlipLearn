@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form>
+        <form id="signin-form">
             <h2>Sign in</h2>
             <div class="inputBox">
                 <input type="text" required="required">
@@ -26,7 +26,19 @@
             </div>
             <input type="submit" value="login">
         </form>
+        <div id="success-message" style="display: none; text-align: center; margin-top: 20px;">
+            <p>✅ Login Successful!</p>
+            <a href="index.html" class="btn-home">Go to Home</a>
+        </div>
 
     </div>
+
+    <script>
+        document.getElementById("signin-form").addEventListener("submit", function(event) {
+            event.preventDefault();  
+            document.getElementById("signin-form").style.display = "none";
+            document.getElementById("success-message").style.display = "block";
+        });
+    </script>
 </body>
 </html>
