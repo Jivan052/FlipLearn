@@ -519,37 +519,68 @@ option {
     }
 }
 
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
+
+    @media screen and (max-width: 480px) {
+        /* Mobile portrait styles */
+
+        body {
+            font-size: 14px;
+        }
+
+        .sidebar,
+        .content {
+            padding: 15px;
+        }
+
+        .flashcard {
+            height: 250px;
+        }
+
+        .card-front,
+        .card-back {
+            padding: 15px;
+        }
+
+        .btn-add,
+        .nav-btn,
+        .btn-flip,
+        .btn-delete {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        select,
+        textarea {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .streak-counter {
+            position: static;
+            margin-bottom: 10px;
+        }
+
     }
 
-    .sidebar, .content {
-        padding: 15px;
-    }
+/* adding hover on FlipLearn */
 
-    .flashcard {
-        height: 250px;
-    }
+    .text-flip {
+        transform: rotateY(30);
+        transition: transform 1.2s; 
+      }
+      
+      .text-flip:hover {
+        transform: rotateY(180deg);
+        color:goldenrod;
+      } 
+      .front{
+         font-size:26px;
+         font-family: Arial, Helvetica, sans-serif;
+         font-weight: bold;
+      }
 
-    .card-front, .card-back {
-        padding: 15px;
-    }
+      /* flip-btn:hover{
+       color: black;
+       box-shadow:  5px 15px white;
+      } */
 
-    .btn-add, .nav-btn, .btn-flip, .btn-delete {
-        padding: 8px 15px;
-        font-size: 0.9em;
-    }
-
-    select, textarea {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .streak-counter {
-        position: static;
-        margin-bottom: 10px;
-    }
-
-    
-}
