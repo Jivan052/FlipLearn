@@ -603,3 +603,43 @@
         }
 
     }
+    .fact-container {
+        
+        margin-left: 800px;
+        margin-top: -400px;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.2); /* Deep blue gradient */
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(30, 60, 114, 0.4);
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        width: 250px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        margin-top: 20px;
+        width: 150px;
+        text-shadow: 1px 1px 8px rgba(42, 82, 152, 0.8);
+        font-family: Arial, Helvetica, sans-serif;
+        
+        
+       
+    }
+    .fact-container button {
+        background-color:transparent;
+        font-size: 15px;
+        font-weight: bold;
+        text-shadow: #ecf0f1;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #FFD700; /* Gold */
+        border: none;
+        margin-top: -10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .fact-container:hover{
+        transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(5, 10, 19, 0.6)
+    }
+    

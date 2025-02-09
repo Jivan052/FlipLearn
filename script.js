@@ -99,7 +99,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update stats
         totalCardsElement.textContent = flashcards.length;
         updateProgress();
+
+        showRandomFact();
     }
+    // Random facts array
+    const facts = [
+        "Snakes can predict earthquakes.",
+        "Lego mini-figures have the largest population on Earth!",
+        "Astronauts grow taller in space!",
+        "We spend a year on the toilet in our lifetime.",
+        "There’s a 50% chance that two people will share a birthday in a group of 23 people.",
+        "There are more stars in the universe than grains of sand on Earth.",
+        "Sea Lions are the only animals who can clap to a beat!",
+        "Glass balls bounce higher than rubber balls.",
+    ];
+
+    // Function to show a random fact
+    function showRandomFact() {
+        let fact = facts[Math.floor(Math.random() * facts.length)];
+        document.getElementById("randomFact").textContent = fact;
+    }
+    updateUI();
+
 
     // Update progress
     function updateProgress() {
@@ -130,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 // Add to script.js
 document.addEventListener('keydown', (e) => {
-    switch(e.key) {
+    switch (e.key) {
         case 'ArrowLeft':
             prevBtn.click();
             break;
@@ -155,7 +176,7 @@ const studyTimer = {
     startTime: null,
     interval: null,
     element: document.getElementById('studyTimer'),
-    
+
     start() {
         this.startTime = Date.now();
         this.interval = setInterval(() => {
@@ -165,7 +186,7 @@ const studyTimer = {
             this.element.textContent = `Study time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }, 1000);
     },
-    
+
     stop() {
         clearInterval(this.interval);
     }
@@ -252,3 +273,6 @@ document.addEventListener('keydown', (e) => {
 // Initialize features
 studyTimer.start();
 updateTags();
+
+
+
