@@ -85,6 +85,8 @@ textarea {
   display: flex;
   align-items: center;
   gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .nav-btn {
