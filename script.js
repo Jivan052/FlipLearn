@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navigation handlers
     prevBtn.addEventListener('click', () => {
+        cardContainer.classList.remove('flipped');
         if (currentIndex > 0) {
             currentIndex--;
             updateUI();
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     nextBtn.addEventListener('click', () => {
+        cardContainer.classList.remove('flipped');
         if (currentIndex < flashcards.length - 1) {
             currentIndex++;
             updateUI();
