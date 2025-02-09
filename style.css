@@ -473,9 +473,9 @@ option {
     }
 
     .controls {
-        align-items: stretch;
         flex-direction: column;
         gap: 15px;
+        align-items: stretch;
         position: absolute;
         right: 0;
         margin-right: 35px;
