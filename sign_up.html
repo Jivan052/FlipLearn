@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon Sign-In/Sign-Up</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f90;
+            border: none;
+            border-radius: 3px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #e68a00;
+        }
+        
+        .conditions {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+        
+        .conditions a {
+            color: #0073bb;
+            text-decoration: none;
+        }
+        
+        .conditions a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .footer a {
+            color: #0073bb;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 3px;
+        }
+        
+        .tab.active {
+            background-color: #e68a00;
+            color: white;
+        }
+        
+        .form-container {
+            display: none;
+        }
+        
+        .form-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" id="loginTab">Sign-In</div>
+            <div class="tab" id="signupTab">Sign-Up</div>
+        </div>
+        
+        <div class="form-container active" id="loginFormContainer">
+            <h1>Sign-In</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="emailOrPhone">Email or mobile phone number</label>
+                    <input type="text" id="emailOrPhone" name="emailOrPhone" required>
+                </div>
+                
+                <button type="submit">Continue</button>
+            </form>
+            <p class="conditions">
+                By continuing, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+            </p>
+            <div class="details">
+                <p>Need help?</p>
+                <a href="#">Forgot your password</a><br>
+                <a href="#">Other issues with sign in</a>
+            </div>
+        </div>
+        
+        <div class="form-container" id="signupFormContainer">
+            <h1>Sign-Up</h1>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="newEmail">Email</label>
+                    <input type="email" id="newEmail" name="newEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                
+                <button type="submit">Create your Amazon account</button>
+            </form>
+            <p class="conditions">
+                By creating an account, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+            </p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginTab').addEventListener('click', function() {
+            document.getElementById('loginTab').classList.add('active');
+            document.getElementById('signupTab').classList.remove('active');
+            document.getElementById('loginFormContainer').classList.add('active');
+            document.getElementById('signupFormContainer').classList.remove('active');
+        });
+        
+        document.getElementById('signupTab').addEventListener('click', function() {
+            document.getElementById('signupTab').classList.add('active');
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('signupFormContainer').classList.add('active');
+            document.getElementById('loginFormContainer').classList.remove('active');
+        });
+    </script>
+</body>
+</html>

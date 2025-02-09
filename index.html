@@ -8,11 +8,42 @@
     <title>Flashcard App</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style type="text/css">
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #0d4854, #00f2fe);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: beige;
+        }
+        .header .login-signup {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .header .login-signup a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
 </head>
 <body>
+    <header class="header">
+        <div class="logo">FlipLearn</div>
+        <div class="login-signup">
+            <a href="/sign_up.html">Login/Sign-in</a>
+        </div>
+    </header>
+    
     <div class="container">
         <div class="sidebar">
-            <h2>FlipLearn</h2>
+           
             <form id="flashcard-form">
                 <select id="category" required>
                     <option value="">Select Category</option>
@@ -27,6 +58,7 @@
                     <i class="fas fa-plus"></i> Add Card
                 </button>
             </form>
+           
             <div class="stats">
                 <div class="study-controls">
                     <div class="streak-counter">
@@ -43,14 +75,14 @@
                         </button>
                     </div>
                 </div>                
-                
-                <h3>Statistics</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <p>Reviewed: <span id="cards-reviewed">0</span></p>
-                <p>Total Cards: <span id="total-cards">0</span></p>
             </div>
+           
+            <h3>Statistics</h3>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p>Reviewed: <span id="cards-reviewed">0</span></p>
+            <p>Total Cards: <span id="total-cards">0</span></p>
         </div>
         
         <main class="content">
@@ -70,14 +102,6 @@
                     <button id="next-btn" class="nav-btn">
                         <i class="fas fa-chevron-right"></i>
                     </button>
-                    
-                    <!-- Implementation of mode -->
-                    <!-- <select class="nav-btn" id="select-mode">
-                        <option value="normal" selected>Normal Mode</option>
-                        <option value="quiz">Quiz Mode</option>
-                    </select> -->
-
-                    
                 </div>
             </div>
 
@@ -104,6 +128,7 @@
             </div>
         </main>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
