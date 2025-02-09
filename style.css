@@ -473,6 +473,7 @@ option {
     }
 
     .controls {
+        align-items: stretch;
         flex-direction: column;
         gap: 15px;
         position: absolute;
