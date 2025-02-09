@@ -1,569 +1,524 @@
-/* Root Variables - Define color scheme and common values */
 :root {
-    --primary: #0d6f71;   /* Main brand color */
-    --secondary: #0c0101;  /* Near black - Secondary color */
-    --dark: #2c3e50;     /* Dark blue - Background elements */
-    --light: #ecf0f1;    /* Light gray - Text and highlights */
-    --glass: rgba(255, 255, 255, 0.1);   /* Transparent white - Glass effect */
-    --border: rgba(255, 255, 255, 0.2);    /* Transparent white - Borders */
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);   /* Box shadow */
-    }
-    /* Reset default styles */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
-    }
+    --primary: #0d6f71;
+    --secondary: #0c0101;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --glass: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255,);  
+}
 
-    /* Main layout styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}  
 
-    body {
-        min-height: 100vh;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-    }
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+}
 
-    /* Container layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 300px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-right: 1px solid var(--border);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+select, textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    color: white;
+    resize: vertical;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+.btn-add {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--glass);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background: var(--primary);
+}
+
+/*Sign in button */
+.btn-signin {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--glass);
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center; 
+    transition: 0.3s;
+}
+
+.btn-signin:hover {
+    background: var(--primary);
+    color: #fff; 
+    transform: scale(1.05); 
+    box-shadow: 0px 4px 10px rgba(107, 139, 125, 0.3); 
+}
+
+
+.flashcard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.flashcard {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    perspective: 1000px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    padding: 30px;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transform-style: preserve-3d;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front .question, 
+.card-back .answer {
+    position: relative;
+    z-index: 2;
+}
+
+
+.category-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px 10px;
+    background: var(--primary);
+    border-radius: 15px;
+    font-size: 0.8em;
+    z-index: 10;
+}
+
+.btn-flip, .btn-delete {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: var(--glass);
+    color: rgb(246, 240, 240);
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.btn-flip:hover {
+    background: var(--primary);
+}
+
+.btn-delete:hover {
+    background: var(--secondary);
+}
+
+.stats {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--glass);
+    border-radius: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+.card-inner {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flashcard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* Difficulty Rating Stars */
+.difficulty-rating {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.star.active {
+    color: #ffd700;
+}
+
+/* Tags Container */
+.tags {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    padding: 4px 8px;
+    background: var(--glass);
+    border-radius: 12px;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tag:hover {
+    background: var(--primary);
+}
+
+/* Streak Counter */
+.streak-counter {
+    position: absolute;
+    top: 30px;
+    left: 500px;
+    padding: 8px 12px;
+    background: var(--glass);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.streak-flame {
+    color: #ffa500;
+}
+
+/* Study Timer */
+.study-timer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: var(--glass);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* Export/Import Buttons */
+.data-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-export, .btn-import {
+    padding: 8px 15px;
+    background: var(--glass);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-export:hover, .btn-import:hover {
+    background: var(--primary);
+}
+
+/* Keyboard Shortcuts Help */
+.shortcuts-help {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 15px;
+    background: var(--glass);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    transform: translateY(100%);
+    transition: transform 0.3s;
+}
+
+.shortcuts-help.visible {
+    transform: translateY(0);
+}
+
+/* Study Statistics */
+.stats-detailed {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--glass);
+    border-radius: 15px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.stat-item {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Animation for correct/incorrect answers */
+@keyframes correct {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); background: rgba(46, 213, 115, 0.2); }
+}
+
+@keyframes incorrect {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); background: rgba(255, 71, 87, 0.2); }
+}
+
+.correct-answer {
+    animation: correct 0.5s ease;
+}
+
+.incorrect-answer {
+    animation: incorrect 0.5s ease;
+}
+
+
+select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+
+}
+
+select:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(13, 111, 113, 0.5);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+option {
+    background: var(--dark);
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 1024px) {
     .container {
-        display: flex;
-        min-height: 100vh;
+        flex-direction: column;
     }
 
-    /* Sidebar styles*/
     .sidebar {
-        width: 300px;
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border-right: 1px solid var(--border);
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
     }
 
-    /* Form element styles */
-    form {
-        display: flex;
+    .content {
+        padding: 20px;
+    }
+
+    .controls {
         flex-direction: column;
         gap: 15px;
-        margin-top: 20px;
-    }
-
-    /* Input field styles */
-    select,
-    textarea {
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: var(--glass);
-        color: white;
-        resize: vertical;
-    }
-
-    textarea {
-        min-height:60px;
-    }
-
-    /* Button styles */
-    .btn-add {
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        background: var(--primary);
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .btn-add:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow);
-    }
-
-    /* Main content area */
-    .content {
-        flex: 1;
-        padding: 30px;
-    }
-
-    /* Navigation controls */
-    .controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-
-    .navigation {
-        display: flex;
-        align-items: center;
-        gap: 15px;
+        align-items: stretch;
         position: absolute;
         right: 0;
         margin-right: 35px;
     }
 
-    .nav-btn {
-        padding: 8px 15px;
-        border: none;
-        border-radius: 20px;
-        background: var(--glass);
-        color:white;
-        cursor: pointer;
-        transition: all 0.3s;
+    .navigation {
+        justify-content: center;
     }
 
-    .nav-btn:hover {
-        background: var(--primary);
-    }
-
-    .flashcard-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    /* Flashcard styles */
     .flashcard {
-        width: 100%;
-        max-width: 600px;
-        height: 400px;
-        perspective: 1000px;
+        max-width: 100%;
+        height: 300px;
     }
+}
 
-    /* Card flip animation */
-    .card-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card-inner.flipped {
-        transform: rotateY(180deg);
-    }
-
-    /* Card face styles */
-    .card-front,
-    .card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        padding: 30px;
-        background: var(--glass);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        border: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        transform-style: preserve-3d;
-    }
-
-    .card-back {
-        transform: rotateY(180deg);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .card-inner.flipped {
-        transform: rotateY(180deg);
-    }
-
-    .card-front .question,
-    .card-back .answer {
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Category tag styling */
-    .category-tag {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        padding: 5px 10px;
-        background: var(--primary);
-        border-radius: 15px;
-        font-size: 0.8em;
-        z-index: 10;
-    }
-
-    /* Button styles */
-    .btn-flip,
-    .btn-delete {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 20px;
-        background: var(--glass);
-        color: rgb(246, 240, 240);
-        cursor: pointer;
-        transition: all 0.1s;
-    }
-
-    .btn-flip:hover {
-        background: var(--primary);
-    }
-    .btn-flip{
-        margin-left: -120px;
-    }
-    .btn-delete{
-        margin-left: 180px;
-        margin-top: -58px;
-    }
-
-    /* CHANGED THE BACKGROUND COLOR OF DELETE BUTTON */
-    .btn-delete:hover {
-        background-color: red;
-    }
-
-    /* Statistics section styling */
-    .stats {
-        margin-top: 30px;
-        padding: 20px;
-        background: var(--glass);
-        border-radius: 10px;
-    }
-
-    /* Progress bar styles */
-    .progress-bar {
-        width: 100%;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
-        margin: 10px 0;
-        overflow: hidden;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: var(--primary);
-        width: 0;
-        transition: width 0.3s ease;
-    }
-
-    /* Notification styles */
-    .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 25px;
-        background: var(--primary);
-        color: white;
-        border-radius: 8px;
-        animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
-    }
-
-    /* Animation keyframes */
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes fadeOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-
-    .card-inner {
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .flashcard:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Difficulty Rating Stars */
-    .difficulty-rating {
-        position: absolute;
-        bottom: 20px;
-        display: flex;
-        gap: 5px;
-    }
-
-    .star {
-        color: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .star.active {
-        color: #ffd700;
-    }
-
-    /* Tags Container */
-    .tags {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
-    .tag {
-        padding: 4px 8px;
-        background: var(--glass);
-        border-radius: 12px;
-        font-size: 0.8em;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .tag:hover {
-        background: var(--primary);
-    }
-
-    /* Streak Counter */
-    .streak-counter {
-        position: absolute;
-        top: 30px;
-        left: 500px;
-        padding: 8px 12px;
-        background: var(--glass);
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .streak-flame {
-        color: #ffa500;
-    }
-
-    /* Study Timer */
-    .study-timer {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 15px;
-        background: var(--glass);
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-    }
-
-    /* Export/Import Buttons */
-    .data-controls {
-        margin-top: 20px;
-        display: flex;
+@media screen and (max-width: 768px) {
+    .sidebar form {
         gap: 10px;
     }
 
-    .btn-export,
-    .btn-import {
-        padding: 8px 15px;
-        background: var(--glass);
-        border: none;
-        border-radius: 15px;
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s;
+    .study-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
     }
 
-    .btn-export:hover,
-    .btn-import:hover {
-        background: var(--primary);
-    }
-
-    /* Keyboard Shortcuts Help */
-    .shortcuts-help {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        padding: 15px;
-        background: var(--glass);
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        transform: translateY(100%);
-        transition: transform 0.3s;
-    }
-
-    .shortcuts-help.visible {
-        transform: translateY(0);
-    }
-
-    /* Study Statistics */
-    .stats-detailed {
-        margin-top: 20px;
-        padding: 15px;
-        background: var(--glass);
-        border-radius: 15px;
+    .data-controls {
+        justify-content: space-between;
     }
 
     .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-top: 10px;
+        grid-template-columns: 1fr;
     }
 
-    .stat-item {
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        text-align: center;
+    .category-tag {
+        position: relative;
+        top: 0;
+        right: 0;
+        align-self: flex-start;
+        margin-bottom: 10px;
     }
+}
 
-    /* Animation for correct/incorrect answers */
-    @keyframes correct {
-
-        0%,
-        100% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.05);
-            background: rgba(46, 213, 115, 0.2);
-        }
-    }
-
-    @keyframes incorrect {
-
-        0%,
-        100% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.05);
-            background: rgba(255, 71, 87, 0.2);
-        }
-    }
-
-    .correct-answer {
-        animation: correct 0.5s ease;
-    }
-
-    .incorrect-answer {
-        animation: incorrect 0.5s ease;
-    }
-
-    /* Select element custom styling */
-    select {
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: var(--glass);
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow);
-
-    }
-
-    select:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: scale(1.05);
-        box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15);
-    }
-
-    select:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(13, 111, 113, 0.5);
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    select {
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        background-size: 16px;
-        padding-right: 40px;
-    }
-
-    option {
-        background: var(--dark);
-        color: white;
-        font-size: 16px;
-        padding: 10px;
-    }
-
-    @media screen and (max-width: 1024px) {
-
-        /* Tablet and smaller desktop styles */
-        .container {
-            flex-direction: column;
-        }
-
-        .sidebar {
-            width: 100%;
-            border-right: none;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .controls {
-            flex-direction: column;
-            gap: 15px;
-            align-items: stretch;
-        }
-
-        .navigation {
-            justify-content: center;
-        }
-
-        .flashcard {
-            max-width: 100%;
-            height: 300px;
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-
-        /* Mobile landscape styles */
-        .sidebar form {
-            gap: 10px;
-        }
-
-        .study-controls {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 10px;
-        }
-
-        .data-controls {
-            justify-content: space-between;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .category-tag {
-            position: relative;
-            top: 0;
-            right: 0;
-            align-self: flex-start;
-            margin-bottom: 10px;
-        }
-    }
 
     @media screen and (max-width: 480px) {
         /* Mobile portrait styles */
@@ -628,3 +583,4 @@
        color: black;
        box-shadow:  5px 15px white;
       } */
+
