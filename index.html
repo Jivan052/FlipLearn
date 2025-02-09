@@ -2,72 +2,112 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flashcard App</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <div class="container">
-        <div class="sidebar">
-            <!-- <h2>FlipLearn</h2> -->
-            <div class="text-flip">
-                <span class="front">FlipLearn</span>
-              </div>
-            <form id="flashcard-form">
-                <select id="category" required>
-                    <option value="">Select Category</option>
-                    <option value="general">General</option>
-                    <option value="math">Mathematics</option>
-                    <option value="science">Science</option>
-                    <option value="history">History</option>
-                </select>
-                <textarea id="question" placeholder="Enter question..." required></textarea>
-                <textarea id="answer" placeholder="Enter answer..." required></textarea>
-                <button type="submit" class="btn-add">
-                    <i class="fas fa-plus"></i> Add Card
-                </button>
-            </form>
-            <div class="stats">
-                <div class="study-controls">
-                    <div class="streak-counter">
-                        <i class="fas fa-fire streak-flame"></i>
-                        <span id="streak-count">0</span> days
-                    </div>
-                    
-                    <div class="data-controls">
-                        <button class="btn-export" id="exportBtn">
-                            <i class="fas fa-download"></i> Export
-                        </button>
-                        <button class="btn-import" id="importBtn">
-                            <i class="fas fa-upload"></i> Import
-                        </button>
-                    </div>
-                </div>                
-                
-                <h3>Statistics</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <p>Reviewed: <span id="cards-reviewed">0</span></p>
-                <p>Total Cards: <span id="total-cards">0</span></p>
-            </div>
-        </div>
-        
-        <main class="content">
-            <div class="controls">
-                <select id="filter-category">
-                    <option value="all">All Categories</option>
-                    <option value="general">General</option>
-                    <option value="math">Mathematics</option>
-                    <option value="science">Science</option>
-                    <option value="history">History</option>
-                </select>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      // Check if this is the first visit
+      function checkFirstVisit() {
+        const hasVisited = localStorage.getItem("hasVisitedBefore");
 
-                <button class="btn-signin" onclick="window.location.href='signin.html'">Sign In</button>
-                <!-- 
+        if (!hasVisited) {
+          // First visit - set the flag and redirect to landing page
+          localStorage.setItem("hasVisitedBefore", "true");
+          window.location.href = "landing.html";
+        }
+      }
+
+      // Run the check immediately
+      checkFirstVisit();
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init("e2OCOVFgr4yXPNREB");
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <!-- <h2>FlipLearn</h2> -->
+        <div class="text-flip">
+          <span class="front">FlipLearn</span>
+        </div>
+        <form id="flashcard-form">
+          <select id="category" required>
+            <option value="">Select Category</option>
+            <option value="general">General</option>
+            <option value="math">Mathematics</option>
+            <option value="science">Science</option>
+            <option value="history">History</option>
+          </select>
+          <textarea
+            id="question"
+            placeholder="Enter question..."
+            required
+          ></textarea>
+          <textarea
+            id="answer"
+            placeholder="Enter answer..."
+            required
+          ></textarea>
+          <button type="submit" class="btn-add">
+            <i class="fas fa-plus"></i> Add Card
+          </button>
+        </form>
+        <div class="stats">
+          <div class="study-controls">
+            <div class="streak-counter">
+              <i class="fas fa-fire streak-flame"></i>
+              <span id="streak-count">0</span> days
+            </div>
+
+            <div class="data-controls">
+              <button class="btn-export" id="exportBtn">
+                <i class="fas fa-download"></i> Export
+              </button>
+              <button class="btn-import" id="importBtn">
+                <i class="fas fa-upload"></i> Import
+              </button>
+            </div>
+          </div>
+
+          <h3>Statistics</h3>
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <p>Reviewed: <span id="cards-reviewed">0</span></p>
+          <p>Total Cards: <span id="total-cards">0</span></p>
+        </div>
+      </div>
+
+      <main class="content">
+        <div class="controls">
+          <select id="filter-category">
+            <option value="all">All Categories</option>
+            <option value="general">General</option>
+            <option value="math">Mathematics</option>
+            <option value="science">Science</option>
+            <option value="history">History</option>
+          </select>
+
+          <button
+            class="btn-signin"
+            onclick="window.location.href='signin.html'"
+          >
+            Sign In
+          </button>
+          <!-- 
                     -----CHANGED THE POSITION OF THE NAVIGATION-----
                     <div class="navigation">
                     <button id="prev-btn" class="nav-btn">
@@ -89,45 +129,72 @@
     
                 
                 </div> -->
+        </div>
 
+        <div class="flashcard-container">
+          <div class="flashcard">
+            <div class="card-inner">
+              <!-- Outer card -->
+              <div class="card-front">
+                <p class="question">Click "Add Card" to begin</p>
+                <span class="category-tag">Welcome</span>
+              </div>
+
+              <div class="card-back">
+                <p class="answer">Your answer will appear here</p>
+              </div>
             </div>
-            
+          </div>
 
-            <div class="flashcard-container">
-                <div class="flashcard">
-                    <div class="card-inner">
-                        <!-- Outer card -->
-                        <div class="card-front">
-                            <p class="question">Click "Add Card" to begin</p>
-                            <span class="category-tag">Welcome</span>
-                        </div>
-
-                        <div class="card-back">
-                            <p class="answer">Your answer will appear here</p>
-                        </div>
-                    </div>
-                </div>
-               
-                <button id="flip-btn" class="btn-flip">
-                    <i class="fas fa-sync-alt"></i> Flip
-                </button>
-                <button id="delete-btn" class="btn-delete">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
-               
-            </div>
-            <div class="navigation">
-                <button id="prev-btn" class="nav-btn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <span id="card-count">0/0</span>
-                <button id="next-btn" class="nav-btn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-
-        </main>
+          <button id="flip-btn" class="btn-flip">
+            <i class="fas fa-sync-alt"></i> Flip
+          </button>
+          <button id="delete-btn" class="btn-delete">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
+        <div class="navigation">
+          <button id="prev-btn" class="nav-btn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span id="card-count">0/0</span>
+          <button id="next-btn" class="nav-btn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </main>
+    </div>
+    <div id="feedback-modal" class="feedback-modal">
+      <div class="feedback-content">
+        <span class="close-btn">&times;</span>
+        <h2>Feedback</h2>
+        <form id="feedback-form">
+          <select id="feedback-type" required>
+            <option value="">Select Feedback Type</option>
+            <option value="bug">Bug Report</option>
+            <option value="feature">Feature Request</option>
+            <option value="general">General Feedback</option>
+          </select>
+          <input
+            type="text"
+            id="feedback-subject"
+            placeholder="Subject"
+            required
+          />
+          <textarea
+            id="feedback-message"
+            placeholder="Your feedback..."
+            required
+          ></textarea>
+          <input
+            type="email"
+            id="feedback-email"
+            placeholder="Your email (optional)"
+          />
+          <button type="submit" class="btn-submit">Send Feedback</button>
+        </form>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
