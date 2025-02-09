@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="signin.css">
+</head>
+<body>
+    <div class="container">
+        <form id="signin-form">
+            <h2>Sign in</h2>
+            <div class="inputBox">
+                <input type="text" required="required">
+                <span>Username</span>
+                <i></i>
+            </div>
+            <div class="inputBox">
+                <input type="password" required="required">
+                <span>password</span>
+                <i></i>
+            </div>
+            <div class="link">
+                <a href="#">Forget password</a>
+                <a href="#">Signup</a>
+            </div>
+            <input type="submit" value="login">
+        </form>
+        <div id="success-message" style="display: none; text-align: center; margin-top: 20px;">
+            <p>✅ Login Successful!</p>
+            <a href="index.html" class="btn-home">Go to Home</a>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById("signin-form").addEventListener("submit", function(event) {
+            event.preventDefault();  
+            document.getElementById("signin-form").style.display = "none";
+            document.getElementById("success-message").style.display = "block";
+        });
+    </script>
+</body>
+</html>
