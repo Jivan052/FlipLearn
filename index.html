@@ -38,6 +38,48 @@
   </head>
   <body>
     <div class="container">
+
+        <div class="sidebar">
+            <div class="text-flip">
+                <span class="front">FlipLearn</span>
+            </div>
+            <form id="flashcard-form">
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="general">General</option>
+                    <option value="math">Mathematics</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                </select>
+                <textarea id="question" placeholder="Enter question..." required></textarea>
+                <textarea id="answer" placeholder="Enter answer..." required></textarea>
+                <button type="submit" class="btn-add">
+                    <i class="fas fa-plus"></i> Add Card
+                </button>
+            </form>
+            <div class="stats">
+                <div class="study-controls">
+                    <div class="streak-counter">
+                        <i class="fas fa-fire streak-flame"></i>
+                        <span id="streak-count">0</span> days
+                    </div>
+                    
+                    <div class="data-controls">
+                        <button class="btn-export" id="exportBtn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="btn-import" id="importBtn">
+                            <i class="fas fa-upload"></i> Import
+                        </button>
+                    </div>
+                </div>                
+                
+                <h3>Statistics</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p>Reviewed: <span id="cards-reviewed">0</span></p>
+              <p>Total Cards: <span id="total-cards">0</span></p>
       <div class="sidebar">
         <!-- <h2>FlipLearn</h2> -->
         <div class="text-flip">
@@ -70,6 +112,7 @@
             <div class="streak-counter">
               <i class="fas fa-fire streak-flame"></i>
               <span id="streak-count">0</span> days
+
             </div>
 
             <div class="data-controls">
