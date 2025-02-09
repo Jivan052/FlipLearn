@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlipLearn - Interactive Flashcard Learning</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #0d6f71;
+        --secondary: #0c0101;
+        --dark: #2c3e50;
+        --light: #ecf0f1;
+        --glass: rgba(255, 255, 255, 0.1);
+        --border: rgba(255, 255, 255, 0.2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Navigation */
+      nav {
+        padding: 20px 0;
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+
+      .get-started-btn {
+        padding: 10px 25px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .get-started-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 160px 0 80px;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero p {
+        font-size: 20px;
+        margin-bottom: 40px;
+        color: rgba(255, 255, 255, 0.9);
+        animation: fadeInUp 1s ease 0.2s;
+        opacity: 0;
+        animation-fill-mode: forwards;
+      }
+
+      /* Features Section */
+      .features {
+        padding: 80px 0;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .feature-card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .feature-icon {
+        font-size: 40px;
+        margin-bottom: 20px;
+        color: var(--primary);
+      }
+
+      /* Demo Section */
+      .demo {
+        padding: 80px 0;
+        text-align: center;
+      }
+      .flashcard-demo {
+        max-width: 500px;
+        height: 300px;
+        margin: 40px auto;
+        perspective: 1000px;
+        position: relative;
+      }
+
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+      }
+
+      .flashcard-demo:hover .card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .card-front,
+      .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .card-front {
+        transform: rotateY(0deg);
+      }
+
+      .card-back {
+        transform: rotateY(180deg);
+      }
+
+      /* Stats Section */
+      .stats {
+        padding: 80px 0;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .stat-item {
+        padding: 20px;
+      }
+
+      .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      /* CTA Section */
+      .cta {
+        padding: 100px 0;
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 40px 0;
+        text-align: center;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 36px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flashcard-demo {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="container nav-content">
+        <a href="#" class="logo">FlipLearn</a>
+        <a href="index.html" class="get-started-btn">Get Started</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="container">
+        <h1>Master Any Subject with Interactive Flashcards</h1>
+        <p>
+          Transform your learning experience with FlipLearn's powerful and
+          intuitive flashcard system
+        </p>
+        <a href="index.html" class="get-started-btn">Start Learning Now</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>Why Choose FlipLearn?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <i class="fas fa-sync-alt feature-icon"></i>
+            <h3>Interactive Learning</h3>
+            <p>
+              Create and study with interactive flashcards that make learning
+              engaging and effective
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-chart-line feature-icon"></i>
+            <h3>Track Progress</h3>
+            <p>
+              Monitor your learning journey with detailed statistics and
+              progress tracking
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-palette feature-icon"></i>
+            <h3>Personalization</h3>
+            <p>
+              Customize card themes and organize content your way with
+              categories
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-cloud feature-icon"></i>
+            <h3>Easy Backup</h3>
+            <p>
+              Export and import your flashcards to never lose your valuable
+              study material
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo">
+      <div class="container">
+        <h2>See It in Action</h2>
+        <div class="flashcard-demo">
+          <div class="card-inner">
+            <div class="card-front">
+              <h3>Hover to see how it works!</h3>
+            </div>
+            <div class="card-back">
+              <h3>It's that simple!</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="stats">
+      <div class="container">
+        <h2>Trusted by Students Worldwide</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">10k+</div>
+            <p>Active Users</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1M+</div>
+            <p>Cards Created</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4.8/5</div>
+            <p>User Rating</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <h2>Ready to Transform Your Learning?</h2>
+        <p>
+          Join thousands of students who are already learning smarter with
+          FlipLearn
+        </p>
+        <br />
+        <a href="index.html" class="get-started-btn">Get Started for Free</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 FlipLearn. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
