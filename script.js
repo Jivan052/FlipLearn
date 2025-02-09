@@ -42,11 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const colorPicker = document.createElement("div");
   colorPicker.className = "color-theme-picker";
   colorPicker.innerHTML = `
+            <div class="card-bg-changer">
             <label for="card-bg-color">Card Background:</label>
             <input type="color" id="card-bg-color" value="#1a3a3b">
+            </div>
+            <div class="card-text-changer">
             <label for="card-text-color">Card Text:</label>
             <input type="color" id="card-text-color" value="#ffffff">
-        `;
+            </div>
+            `;
 
   // Shuffle Button
   const shuffleBtn = document.createElement("button");
@@ -351,6 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
       questionDisplay.textContent = "No cards available";
       answerDisplay.textContent = "Add some cards to begin";
       categoryTag.textContent = "Empty";
+      categoryTag.classList.add("empty-span")
       cardCount.textContent = "0/0";
 
       // Set default theme
@@ -363,6 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cardCount.textContent = `${currentIndex + 1}/${
         filteredFlashcards.length
       }`;
+      categoryTag.classList.remove("empty-span")
 
       // Apply card's theme or default theme
       setCardTheme(currentCard.theme || defaultTheme);

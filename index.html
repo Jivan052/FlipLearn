@@ -44,7 +44,7 @@
           <span class="front">FlipLearn</span>
         </div>
         <form id="flashcard-form">
-          <select id="category" required>
+          <select id="category" class="select-category" required>
             <option value="">Select Category</option>
             <option value="general">General</option>
             <option value="math">Mathematics</option>
@@ -151,13 +151,15 @@
             </div>
           </div>
 
-          <button id="flip-btn" class="btn-flip">
-            <i class="fas fa-sync-alt"></i> Flip
-          </button>
           <button id="show__ans__btn" class="btn-flip">Show Ans</button>
-          <button id="delete-btn" class="btn-delete">
-            <i class="fas fa-trash"></i> Delete
-          </button>
+          <div class="flip-delete-div">
+            <button id="flip-btn" class="btn-flip">
+              <i class="fas fa-sync-alt"></i> Flip
+            </button>
+            <button id="delete-btn" class="btn-delete">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
         </div>
         <div class="navigation">
           <button id="prev-btn" class="nav-btn">
