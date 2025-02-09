@@ -1,11 +1,11 @@
 /* Root Variables - Define color scheme and common values */
 :root {
-    --primary: #0d6f71;   /* Main brand color */
+    --primary: #245972;   /* Main brand color */
     --secondary: #0c0101;  /* Near black - Secondary color */
-    --dark: #2c3e50;     /* Dark blue - Background elements */
+    --dark: rgb(104, 82, 26);     /* Dark blue - Background elements */
     --light: #ecf0f1;    /* Light gray - Text and highlights */
     --glass: rgba(255, 255, 255, 0.1);   /* Transparent white - Glass effect */
-    --border: rgba(255, 255, 255, 0.2);    /* Transparent white - Borders */
+    --border: rgba(206, 51, 51, 0.2);    /* Transparent white - Borders */
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);   /* Box shadow */
     }
     /* Reset default styles */
@@ -50,12 +50,14 @@
     /* Input field styles */
     select,
     textarea {
-        padding: 10px;
+        padding: 50px;
         border-radius: 8px;
-        border: 1px solid var(--border);
+        border: 6px solid var(--border);
         background: var(--glass);
         color: white;
         resize: vertical;
+        font-size: 18px;
+        box-shadow:8px 4px 5px 0px rgba(0, 0, 0, 0.5);
     }
 
     textarea {
@@ -109,7 +111,7 @@
     }
 
     .nav-btn:hover {
-        background: var(--primary);
+        background: var(--primary); 
     }
 
     .flashcard-container {
@@ -117,6 +119,7 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        position: relative;
     }
 
     /* Flashcard styles */
@@ -365,15 +368,30 @@
         gap: 10px;
     }
 
+    /* adding (click on) effect on import, export, */
+     .btn-export:hover{
+        transform: scale(1.2);
+     }
+     .btn-import:hover{
+        transform: scale(1.2);
+     }
+      textarea:hover{
+        transform: scale(0.98);
+      }
+
+
+
     .btn-export,
     .btn-import {
-        padding: 8px 15px;
+        padding: 10px 10px;
+        margin-top: -30px;
         background: var(--glass);
         border: none;
         border-radius: 15px;
         color: white;
         cursor: pointer;
         transition: all 0.3s;
+        box-shadow:8px 4px 5px 0px rgba(0, 0, 0, 0.5); 
     }
 
     .btn-export:hover,
@@ -605,7 +623,6 @@
     }
 
 /* adding hover on FlipLearn */
-
     .text-flip {
         transform: rotateY(30);
         transition: transform 1.2s; 
@@ -620,5 +637,40 @@
          font-family: Arial, Helvetica, sans-serif;
          font-weight: bold;
       }
+/* adding click on effects for user interaction */
+      .streak-counter:hover{
+       background-color: green;
+       color: black;
+       box-shadow:8px 4px 5px 0px rgb(14, 46, 74);
+      }
+      .btn-flip{
+        position: absolute;
+        left: 110px;
+        bottom: -60px;
+      }
+      .btn-delete{
+        position: absolute;
+        left: -200px;
+        bottom: -110px;
+      }
 
-      
+      .btn-flip:hover{
+       background-color: green;
+       transform: scale(0.90);
+       box-shadow:8px 4px 5px 0px rgba(0, 0, 0, 0.5); 
+      }
+      .btn-delete:hover{
+        transform: scaleY(0.90);
+        box-shadow:8px 4px 5px 0px rgba(10, 0, 0, 0.5); 
+        padding-right: -1000px;
+      }
+      .card-front,.card-back{
+        font-size: 25px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #0c0101;  
+        background: linear-gradient(50deg,blue , white,blue,white,blue);
+        height: 600px;
+        width: 800px; 
+      }
+
+
