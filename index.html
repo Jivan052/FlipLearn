@@ -12,7 +12,10 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <h2>FlipLearn</h2>
+            <!-- <h2>FlipLearn</h2> -->
+            <div class="text-flip">
+                <span class="front">FlipLearn</span>
+              </div>
             <form id="flashcard-form">
                 <select id="category" required>
                     <option value="">Select Category</option>
@@ -62,7 +65,9 @@
                     <option value="science">Science</option>
                     <option value="history">History</option>
                 </select>
-                <div class="navigation">
+                <!-- 
+                    -----CHANGED THE POSITION OF THE NAVIGATION-----
+                    <div class="navigation">
                     <button id="prev-btn" class="nav-btn">
                         <i class="fas fa-chevron-left"></i>
                     </button>
@@ -78,7 +83,7 @@
                     </select>
 
                     
-                </div>
+                </div> -->
             </div>
 
             <div class="flashcard-container">
@@ -104,6 +109,16 @@
                     <i class="fas fa-trash"></i> Delete
                 </button>
             </div>
+            <div class="navigation">
+                <button id="prev-btn" class="nav-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <span id="card-count">0/0</span>
+                <button id="next-btn" class="nav-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
         </main>
     </div>
     <script src="script.js"></script>
