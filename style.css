@@ -968,6 +968,8 @@ option {
 
 
 
+/* facts added */  
+
 .fact-container {
         
   margin-left: 780px;
@@ -1006,4 +1008,44 @@ option {
 .fact-container:hover{
   transform: scale(1.05);
 box-shadow: 0 6px 20px rgba(5, 10, 19, 0.6)
+}
+  
+.fact-container {
+  background-color: white;
+  position: absolute;
+ 
+  left: -470px;
+  top: 100px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(156, 84, 84, 0.1);
+  width: 300px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.fact-container:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: blueviolet; 
+  background: linear-gradient( 20deg,lightgreen ,pink, yellow,lightgreen); 
+}
+#fact-toggle {
+  display: none;
+}
+#fact-toggle:checked + .fact-title + .fact {
+  display: block;
+}
+.fact {
+  display: none;
+  margin-bottom: 20px;
+}
+.fact-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: red;
+  cursor: pointer;
+}
+.fact-text {
+  font-size: 20px;
+  color:black;
+
 }
