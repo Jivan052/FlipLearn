@@ -34,11 +34,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectMode = document.getElementById("select__mode");
   const guessInput = document.querySelector(".select__mode__input");
   const showAnswerBtn = document.getElementById("show__ans__btn");
-
+  const favoriteStar = document.querySelector(".favorite-star");
   window.onload = function () {
     toggleQuizMode(); // it hide answer input box and show answer btn initially
   };
-
+  favoriteStar.addEventListener("click", () => {
+    let currentCard = flashcards[currentIndex];
+    if(currentCard.favorite){
+      currentCard.favorite = false;
+    }else{
+      currentCard.favorite = true
+    }
+    saveToLocalStorage();
+    updateUI();
+  })
   const colorPicker = document.createElement("div");
   colorPicker.className = "color-theme-picker";
   colorPicker.innerHTML = `
@@ -363,7 +372,11 @@ document.addEventListener("DOMContentLoaded", () => {
       cardCount.textContent = `${currentIndex + 1}/${
         filteredFlashcards.length
       }`;
-
+      if(currentCard.favorite){
+        favoriteStar.firstElementChild.classList.replace('fa-regular', 'fa-solid')
+      }else{
+        favoriteStar.firstElementChild.classList.replace('fa-solid', 'fa-regular');
+      }
       // Apply card's theme or default theme
       setCardTheme(currentCard.theme || defaultTheme);
     }
@@ -562,27 +575,27 @@ document.addEventListener("keydown", (e) => {
   }
 });
 // Add to existing script.js
-const studyTimer = {
-  startTime: null,
-  interval: null,
-  element: document.getElementById("studyTimer"),
+// const studyTimer = {
+//   startTime: null,
+//   interval: null,
+//   element: document.getElementById("studyTimer"),
 
-  start() {
-    this.startTime = Date.now();
-    this.interval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
-      const minutes = Math.floor(elapsed / 60);
-      const seconds = elapsed % 60;
-      this.element.textContent = `Study time: ${minutes
-        .toString()
-        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    }, 1000);
-  },
+//   start() {
+//     this.startTime = Date.now();
+//     this.interval = setInterval(() => {
+//       const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+//       const minutes = Math.floor(elapsed / 60);
+//       const seconds = elapsed % 60;
+//       this.element.textContent = `Study time: ${minutes
+//         .toString()
+//         .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+//     }, 1000);
+//   },
 
-  stop() {
-    clearInterval(this.interval);
-  },
-};
+//   stop() {
+//     clearInterval(this.interval);
+//   },
+// };
 
 // Difficulty rating
 document.querySelectorAll(".star").forEach((star) => {
@@ -603,27 +616,27 @@ function updateStarRating(rating) {
 }
 
 // Tags management
-document.getElementById("tags").addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
-    const tags = e.target.value.split(",").map((tag) => tag.trim());
-    flashcards[currentIndex].tags = tags;
-    updateTags();
-    saveToLocalStorage();
-    e.target.value = "";
-  }
-});
+// document.getElementById("tags").addEventListener("keyup", (e) => {
+//   if (e.key === "Enter") {
+//     const tags = e.target.value.split(",").map((tag) => tag.trim());
+//     flashcards[currentIndex].tags = tags;
+//     updateTags();
+//     saveToLocalStorage();
+//     e.target.value = "";
+//   }
+// });
 
-function updateTags() {
-  const tagsContainer = document.getElementById("cardTags");
-  const tags = flashcards[currentIndex].tags || [];
-  tagsContainer.innerHTML = tags
-    .map(
-      (tag) => `
-        <span class="tag">${tag}</span>
-    `
-    )
-    .join("");
-}
+// function updateTags() {
+//   const tagsContainer = document.getElementById("cardTags");
+//   const tags = flashcards[currentIndex].tags || [];
+//   tagsContainer.innerHTML = tags
+//     .map(
+//       (tag) => `
+//         <span class="tag">${tag}</span>
+//     `
+//     )
+//     .join("");
+// }
 
 // Export/Import functionality
 document.getElementById("exportBtn").addEventListener("click", () => {
@@ -664,5 +677,5 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Initialize features
-studyTimer.start();
-updateTags();
+//studyTimer.start();
+//updateTags();
