@@ -54,18 +54,19 @@ textarea {
   min-height: 100px;
 }
 
-.btn-add {
-  padding: 12px;
+.btn-add1 {
+  padding: 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 18px;
   background: var(--primary);
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
+  
 }
 
-.btn-add:hover {
-  transform: translateY(-2px);
+.btn-add1:hover {
+  /* transform: translateY(-2px); */
   box-shadow: var(--shadow);
 }
 
@@ -189,7 +190,7 @@ textarea {
   position: absolute;
   top: 20px;
   right: 20px;
-  padding: 5px 10px;
+  padding: 8px 14px;
   background: var(--primary);
   border-radius: 15px;
   font-size: 0.8em;
@@ -203,6 +204,14 @@ textarea {
   border: none;
   border-radius: 50px;
   font-size: medium;
+}
+
+.flip-delete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 10px;
 }
 
 .btn-flip,
@@ -221,7 +230,7 @@ textarea {
 }
 
 .btn-delete:hover {
-  background: var(--secondary);
+  background: var(--primary);
 }
 
 .stats {
@@ -229,6 +238,35 @@ textarea {
   padding: 20px;
   background: var(--glass);
   border-radius: 10px;
+  border: 1px solid var(--border);
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review-card{
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-add{
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.btn-add:hover,
+.btn-add1:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0px 4px 5px rgba(107, 139, 125, 0.3);
 }
 
 .progress-bar {
@@ -362,7 +400,7 @@ textarea {
 .data-controls {
   margin-top: 20px;
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
 }
 
 .btn-export,
@@ -466,7 +504,7 @@ select {
 
 select:hover {
   background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15);
 }
 
@@ -485,6 +523,7 @@ select {
   background-size: 16px;
   padding-right: 40px;
 }
+
 
 option {
   background: var(--dark);
@@ -509,7 +548,7 @@ option {
   }
 
   .controls {
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 15px;
     align-items: stretch;
     position: absolute;
@@ -525,6 +564,7 @@ option {
     max-width: 100%;
     height: 300px;
   }
+  
 }
 
 @media screen and (max-width: 768px) {
@@ -550,9 +590,14 @@ option {
     position: relative;
     top: 0;
     right: 0;
-    align-self: flex-start;
+    margin-top: 10px;
     margin-bottom: 10px;
   }
+  .flashcard{
+    max-width: 100%;
+    margin-top: 70px; 
+  }
+  
 }
 
 @media screen and (max-width: 480px) {
@@ -577,9 +622,12 @@ option {
   }
 
   .btn-add,
-  .nav-btn,
   .btn-flip,
   .btn-delete {
+    padding: 8px 15px;
+    font-size: 0.9em;
+  }
+  .nav-btn {
     padding: 8px 15px;
     font-size: 0.9em;
   }
@@ -928,7 +976,7 @@ option {
 }
 
 .color-theme-picker input[type="color"] {
-  -webkit-appearance: none;
+  --webkit-appearance: none;
   width: 40px;
   height: 40px;
   border: none;

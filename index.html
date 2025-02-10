@@ -65,7 +65,7 @@
             placeholder="Enter answer..."
             required
           ></textarea>
-          <button type="submit" class="btn-add">
+          <button type="submit" class="btn-add1">
             <i class="fas fa-plus"></i> Add Card
           </button>
         </form>
@@ -90,8 +90,10 @@
           <div class="progress-bar">
             <div class="progress-fill"></div>
           </div>
-          <p>Reviewed: <span id="cards-reviewed">0</span></p>
-          <p>Total Cards: <span id="total-cards">0</span></p>
+          <div class="review-card">
+            <p>Reviewed: <span id="cards-reviewed">0</span></p>
+            <p>Total Cards: <span id="total-cards">0</span></p>  
+          </div>
         </div>
       </div>
 
@@ -155,13 +157,14 @@
             </div>
           </div>
 
-          <button id="flip-btn" class="btn-flip">
-            <i class="fas fa-sync-alt"></i> Flip
-          </button>
-          <button id="show__ans__btn" class="btn-flip">Show Ans</button>
-          <button id="delete-btn" class="btn-delete">
-            <i class="fas fa-trash"></i> Delete
-          </button>
+          <div class="flip-delete">
+            <button id="flip-btn" class="btn-flip">
+                <i class="fas fa-sync-alt"></i> Flip
+            </button>
+            <button id="delete-btn" class="btn-delete">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
         </div>
         <div class="navigation">
           <button id="prev-btn" class="nav-btn">
@@ -171,11 +174,10 @@
           <button id="next-btn" class="nav-btn">
             <i class="fas fa-chevron-right"></i>
           </button>
-          <div class="fact-container">
+          <!-- <div class="fact-container">
             <button onclick="showRandomFact()">Did you know?</button>
             <p id="randomFact">Click the button to see a fact!</p>
-            
-        </div>
+          </div> -->
         </div>
       </main>
     </div>
