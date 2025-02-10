@@ -195,6 +195,15 @@ textarea {
   font-size: 0.8em;
   z-index: 10;
 }
+.favorite-star {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  padding: 5px 10px;
+  font-size: 1.2em;
+  z-index: 10;
+}
+
 
 .select__mode__input {
   margin-top: 60px;
