@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const showAnswerBtn = document.getElementById("show__ans__btn");
 
   // Session progress tracking
-  let sessionCardsCompleted = 0;
+  let sessionCardsCompleted = 1;
 
   function updateSessionProgress() {
     const progressFill = document.querySelector(".session-progress-fill");
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function resetSessionProgress() {
-    sessionCardsCompleted = 0;
+    sessionCardsCompleted = 1;
     updateSessionProgress();
   }
 
