@@ -230,7 +230,11 @@ document.addEventListener("DOMContentLoaded", () => {
         categoryTag.textContent = currentCard.category;
         cardCount.textContent = `${currentIndex + 1}/${flashcards.length}`;
       }
+
+
     }
+
+
 
     // Shuffle Notification function
     function showNotification(message) {
@@ -360,9 +364,8 @@ document.addEventListener("DOMContentLoaded", () => {
       questionDisplay.textContent = currentCard.question;
       answerDisplay.textContent = currentCard.answer;
       categoryTag.textContent = currentCard.category;
-      cardCount.textContent = `${currentIndex + 1}/${
-        filteredFlashcards.length
-      }`;
+      cardCount.textContent = `${currentIndex + 1}/${filteredFlashcards.length
+        }`;
 
       // Apply card's theme or default theme
       setCardTheme(currentCard.theme || defaultTheme);
@@ -378,7 +381,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update stats
     totalCardsElement.textContent = filteredFlashcards.length;
     updateProgress();
+    showRandomFact();
+
   }
+
+  // Random facts array
+  const facts = [
+    "Snakes can predict earthquakes.",
+    "Lego mini-figures have the largest population on Earth!",
+    "Astronauts grow taller in space!",
+    "We spend a year on the toilet in our lifetime.",
+    "There’s a 50% chance that two people will share a birthday in a group of 23 people.",
+    "There are more stars in the universe than grains of sand on Earth.",
+    "Sea Lions are the only animals who can clap to a beat!",
+    "Glass balls bounce higher than rubber balls.",
+  ];
+
+  // Function to show a random fact
+  function showRandomFact() {
+    let fact = facts[Math.floor(Math.random() * facts.length)];
+    document.getElementById("randomFact").textContent = fact;
+  }
+  updateUI();
 
   function setCardTheme(theme) {
     const cardFront = document.querySelector(".card-front");
@@ -525,9 +549,8 @@ document.addEventListener("DOMContentLoaded", () => {
     existingNotifications.forEach((notification) => notification.remove());
 
     const notification = document.createElement("div");
-    notification.className = `notification ${
-      isError ? "notification-error" : ""
-    }`;
+    notification.className = `notification ${isError ? "notification-error" : ""
+      }`;
     notification.textContent = message;
     document.body.appendChild(notification);
 
