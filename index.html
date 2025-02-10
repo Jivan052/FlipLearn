@@ -39,12 +39,13 @@
   <body>
     <div class="container">
       <div class="sidebar">
-        <!-- Landing page navigation & logo-->
+        <!-- Landing page navigation & logo with links to other pages -->
         <div class="text-flip">
           <a href="landing.html" style="text-decoration: none">
             <span class="front" style="color: white">FlipLearn</span>
           </a>
         </div>
+
         <!-- ----- -->
         <form id="flashcard-form">
           <select id="category" required>
@@ -172,6 +173,11 @@
           <button id="next-btn" class="nav-btn">
             <i class="fas fa-chevron-right"></i>
           </button>
+          <div class="fact-container">
+            <button onclick="showRandomFact()">Did you know?</button>
+            <p id="randomFact">Click the button to see a fact!</p>
+            
+        </div>
         </div>
         <div class="session-progress">
           <div class="session-progress-header">
