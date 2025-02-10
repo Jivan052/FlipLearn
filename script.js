@@ -35,6 +35,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const guessInput = document.querySelector(".select__mode__input");
   const showAnswerBtn = document.getElementById("show__ans__btn");
 
+  // Session progress tracking
+  let sessionCardsCompleted = 0;
+
+  function updateSessionProgress() {
+    const progressFill = document.querySelector(".session-progress-fill");
+    const progressPercentage = document.getElementById("progress-percentage");
+    const cardsCompletedElement = document.getElementById("cards-completed");
+    const totalCardsElement = document.getElementById("total-cards-session");
+
+    const progress = (sessionCardsCompleted / filteredFlashcards.length) * 100;
+
+    progressFill.style.width = `${progress}%`;
+    progressPercentage.textContent = `${Math.round(progress)}%`;
+    cardsCompletedElement.textContent = `${sessionCardsCompleted} cards reviewed`;
+    totalCardsElement.textContent = `${filteredFlashcards.length} total cards`;
+  }
+
+  function resetSessionProgress() {
+    sessionCardsCompleted = 0;
+    updateSessionProgress();
+  }
+
+  // Call reset when page loads
+  resetSessionProgress();
+
   window.onload = function () {
     toggleQuizMode(); // it hide answer input box and show answer btn initially
   };
@@ -108,6 +133,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const statsSection = document.querySelector(".stats");
   const feedbackBtn = document.createElement("button");
   feedbackBtn.className = "btn-add";
+
+  // adding styles
+  feedbackBtn.style.display = "block";
+  feedbackBtn.style.margin = "auto";
+  feedbackBtn.style.marginTop = "10px";
+  feedbackBtn.style.width = "50%";
+  feedbackBtn.style.textAlign = "center";
+  feedbackBtn.style.backgroundColor = "#1a3a3b";
+  feedbackBtn.style.color = "#ffffff";
+  feedbackBtn.style.padding = "10px";
+  feedbackBtn.style.borderRadius = "10px";
+  feedbackBtn.style.cursor = "pointer";
+  feedbackBtn.style.border = "none";
+  feedbackBtn.style.outline = "none";
+  feedbackBtn.style.fontWeight = "bold";
+  feedbackBtn.style.fontSize = "16px";
+  feedbackBtn.style.transition = "all 0.3s";
+
   feedbackBtn.innerHTML = '<i class="fas fa-comment"></i> Give Feedback';
   statsSection.appendChild(feedbackBtn);
 
@@ -260,8 +303,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentIndex < flashcards.length - 1) {
       currentIndex++;
       updateUI();
-      cardsReviewed++;
-      updateProgress();
+      // Update session progress when moving to next card
+      sessionCardsCompleted = Math.min(
+        sessionCardsCompleted + 1,
+        filteredFlashcards.length
+      );
+      updateSessionProgress();
     }
   });
 
@@ -343,6 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Listen for category filter changes
   filterCategory.addEventListener("change", () => {
     applyFilterCategory();
+    resetSessionProgress(); // Reset progress when changing categories
   });
 
   // Update UI

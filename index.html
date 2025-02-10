@@ -41,8 +41,8 @@
       <div class="sidebar">
         <!-- Landing page navigation & logo-->
         <div class="text-flip">
-          <a href="landing.html" style="text-decoration: none;">
-            <span class="front" style="color: white;">FlipLearn</span>
+          <a href="landing.html" style="text-decoration: none">
+            <span class="front" style="color: white">FlipLearn</span>
           </a>
         </div>
         <!-- ----- -->
@@ -85,12 +85,14 @@
             </div>
           </div>
 
-          <h3>Statistics</h3>
-          <div class="progress-bar">
-            <div class="progress-fill"></div>
+          <div class="wantToHide">
+            <h3>Statistics</h3>
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+            <p>Reviewed: <span id="cards-reviewed">0</span></p>
+            <p>Total Cards: <span id="total-cards">0</span></p>
           </div>
-          <p>Reviewed: <span id="cards-reviewed">0</span></p>
-          <p>Total Cards: <span id="total-cards">0</span></p>
         </div>
       </div>
 
@@ -170,6 +172,19 @@
           <button id="next-btn" class="nav-btn">
             <i class="fas fa-chevron-right"></i>
           </button>
+        </div>
+        <div class="session-progress">
+          <div class="session-progress-header">
+            <span>Session Progress</span>
+            <span id="progress-percentage">0%</span>
+          </div>
+          <div class="session-progress-bar">
+            <div class="session-progress-fill"></div>
+          </div>
+          <div class="session-progress-stats">
+            <span id="cards-completed">0 cards reviewed</span>
+            <span id="total-cards-session">0 total cards</span>
+          </div>
         </div>
       </main>
     </div>
