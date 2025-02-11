@@ -370,6 +370,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }`;
       categoryTag.classList.remove("empty-span")
 
+      if(currentCard.favorite){
+        favoriteStar.firstElementChild.classList.replace('fa-regular', 'fa-solid')
+      }else{
+        favoriteStar.firstElementChild.classList.replace('fa-solid', 'fa-regular');
+      }
+      cardCount.textContent = `${currentIndex + 1}/${filteredFlashcards.length}`;
+
       // Apply card's theme or default theme
       setCardTheme(currentCard.theme || defaultTheme);
     }
