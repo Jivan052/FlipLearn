@@ -185,6 +185,11 @@ textarea {
   z-index: 2;
 }
 
+.empty-span {
+  margin-inline: auto;
+  margin-top: 10px;
+}
+
 .category-tag {
   position: absolute;
   top: 20px;
@@ -204,6 +209,11 @@ textarea {
   z-index: 10;
 }
 
+
+.flip-delete-div {
+  display: flex;
+  gap: 20px;
+}
 
 .select__mode__input {
   margin-top: 60px;
@@ -921,13 +931,29 @@ option {
 
 .color-theme-picker {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  justify-content: center;
   gap: 15px;
   margin-bottom: 15px;
   padding: 10px;
   background: var(--glass);
   border-radius: 8px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+}
+
+.card-bg-changer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-text-changer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .color-theme-picker label {
