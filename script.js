@@ -1,31 +1,30 @@
-const selectMode = document.getElementById("select-mode");
 
 const flipSound = new Audio("flip.ogg");
-
 emailjs.init("e2OCOVFgr4yXPNREB");
+let flashcards = JSON.parse(localStorage.getItem("flashcards")) || []; //Extract Flashcards from locale storage.When receiving data from a web server, the data is always a string.Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+let filteredFlashcards = [...flashcards];
+let currentIndex = 0;
+let cardsReviewed = 0;
+const defaultTheme = {
+  background: "#1a3a3b",
+  text: "#ffffff",
+};
+
+let flipBtn;
+let prevBtn;
+let nextBtn;
+let deleteBtn;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // State
-  let flashcards = JSON.parse(localStorage.getItem("flashcards")) || []; //Extract Flashcards from locale storage.When receiving data from a web server, the data is always a string.Parse the data with JSON.parse(), and the data becomes a JavaScript object.
-  let filteredFlashcards = [...flashcards];
-  let currentIndex = 0;
-  let cardsReviewed = 0;
-
-  const defaultTheme = {
-    background: "#1a3a3b",
-    text: "#ffffff",
-  };
-
-  // DOM Elements
   const form = document.getElementById("flashcard-form");
   const cardContainer = document.querySelector(".card-inner");
   const questionDisplay = document.querySelector(".question");
   const answerDisplay = document.querySelector(".answer");
   const categoryTag = document.querySelector(".category-tag");
-  const flipBtn = document.getElementById("flip-btn");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-  const deleteBtn = document.getElementById("delete-btn");
+  flipBtn = document.getElementById("flip-btn");
+  prevBtn = document.getElementById("prev-btn");
+  nextBtn = document.getElementById("next-btn");
+  deleteBtn = document.getElementById("delete-btn");
   const cardCount = document.getElementById("card-count");
   const filterCategory = document.getElementById("filter-category");
   const progressFill = document.querySelector(".progress-fill");
@@ -39,14 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleQuizMode(); // it hide answer input box and show answer btn initially
   };
   favoriteStar.addEventListener("click", () => {
-    let currentCard = flashcards[currentIndex];
-    if(currentCard.favorite){
-      currentCard.favorite = false;
-    }else{
-      currentCard.favorite = true
+    if(filteredFlashcards.length > 0){
+        let currentCard = filteredFlashcards[currentIndex];
+        if(currentCard.favorite){
+          currentCard.favorite = false;
+        }else{
+          currentCard.favorite = true
+        }
+        saveToLocalStorage();
+        updateUI();
     }
-    saveToLocalStorage();
-    updateUI();
   })
   const colorPicker = document.createElement("div");
   colorPicker.className = "color-theme-picker";
@@ -153,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer = document.getElementById("answer").value;
     const bgColor = document.getElementById("card-bg-color").value;
     const textColor = document.getElementById("card-text-color").value;
-
     const newCard = {
       category,
       question,
@@ -178,90 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize EmailJS (if you haven't added this to your HTML)
   emailjs.init("e2OCOVFgr4yXPNREB");
-
-  document.addEventListener("DOMContentLoaded", () => {
-    // State
-    let flashcards = JSON.parse(localStorage.getItem("flashcards")) || [];
-    let currentIndex = 0;
-    let cardsReviewed = 0;
-
-    const defaultTheme = {
-      background: "#1a3a3b",
-      text: "#ffffff",
-    };
-
-    // DOM Elements
-    const form = document.getElementById("flashcard-form");
-    const cardContainer = document.querySelector(".card-inner");
-    const questionDisplay = document.querySelector(".question");
-    const answerDisplay = document.querySelector(".answer");
-    const categoryTag = document.querySelector(".category-tag");
-    const flipBtn = document.getElementById("flip-btn");
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
-    const deleteBtn = document.getElementById("delete-btn");
-    const cardCount = document.getElementById("card-count");
-    const filterCategory = document.getElementById("filter-category");
-    const progressFill = document.querySelector(".progress-fill");
-    const cardsReviewedElement = document.getElementById("cards-reviewed");
-    const totalCardsElement = document.getElementById("total-cards");
-
-    // Shuffle Button
-    const shuffleBtn = document.createElement("button");
-    shuffleBtn.innerHTML = '<i class="fas fa-random"></i> Shuffle';
-    shuffleBtn.classList.add("nav-btn");
-    document.querySelector(".navigation").appendChild(shuffleBtn);
-
-    // Function to shuffle an array using Fisher-Yates algorithm
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
-
-    shuffleBtn.addEventListener("click", () => {
-      if (flashcards.length > 0) {
-        shuffleArray(flashcards);
-        currentIndex = 0;
-        updateUI();
-        showNotification("Cards shuffled successfully!");
-      }
-    });
-
-    // Function to update UI
-    function updateUI() {
-      if (flashcards.length === 0) {
-        questionDisplay.textContent = "No cards available";
-        answerDisplay.textContent = "Add some cards to begin";
-        categoryTag.textContent = "Empty";
-        cardCount.textContent = "0/0";
-      } else {
-        const currentCard = flashcards[currentIndex];
-        questionDisplay.textContent = currentCard.question;
-        answerDisplay.textContent = currentCard.answer;
-        categoryTag.textContent = currentCard.category;
-        cardCount.textContent = `${currentIndex + 1}/${flashcards.length}`;
-      }
-
-
-    }
-
-
-
-    // Shuffle Notification function
-    function showNotification(message) {
-      const notification = document.createElement("div");
-      notification.className = "notification";
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      setTimeout(() => {
-        notification.remove();
-      }, 2000);
-    }
-
-    updateUI();
-  });
 
   // Navigation handlers
   prevBtn.addEventListener("click", () => {
@@ -370,7 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
       categoryTag.textContent = "Empty";
       categoryTag.classList.add("empty-span")
       cardCount.textContent = "0/0";
-
       // Set default theme
       setCardTheme(defaultTheme);
     } else {
@@ -577,11 +492,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
+  // Export/Import functionality
+document.getElementById("exportBtn").addEventListener("click", () => {
+  const data = JSON.stringify(flashcards);
+  const blob = new Blob([data], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "flashcards.json";
+  a.click();
+});
+
+document.getElementById("importBtn").addEventListener("click", () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".json";
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      flashcards = JSON.parse(event.target.result);
+      saveToLocalStorage();
+      applyFilterCategory();
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+});
+
   // Initialize
   updateUI();
 });
 // Add to script.js
-document.addEventListener("keydown", (e) => {
+var mainContent = document.querySelector("#main-content")
+mainContent.addEventListener("keydown", (e) => {
+e.preventDefault();
   switch (e.key) {
     case "ArrowLeft":
       prevBtn.click();
@@ -590,11 +535,11 @@ document.addEventListener("keydown", (e) => {
       nextBtn.click();
       break;
 
-    // Removed spacebar handling to allow typing spaces in text inputs
-    // case ' ':
-    //     e.preventDefault();
-    //     flipBtn.click();
-    //     break;
+    //Removed spacebar handling to allow typing spaces in text inputs
+    case ' ':
+        e.preventDefault();
+        flipBtn.click();
+        break;
     case "Delete":
       if (confirm("Delete this card?")) {
         deleteBtn.click();
@@ -666,43 +611,15 @@ function updateStarRating(rating) {
 //     .join("");
 // }
 
-// Export/Import functionality
-document.getElementById("exportBtn").addEventListener("click", () => {
-  const data = JSON.stringify(flashcards);
-  const blob = new Blob([data], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "flashcards.json";
-  a.click();
-});
-
-document.getElementById("importBtn").addEventListener("click", () => {
-  const input = document.createElement("input");
-  input.type = "file";
-  input.accept = ".json";
-  input.onchange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      flashcards = JSON.parse(event.target.result);
-      saveToLocalStorage();
-      applyFilterCategory();
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-});
-
 // Keyboard shortcuts
-document.addEventListener("keydown", (e) => {
-  if (e.key === "?") {
-    document.querySelector(".shortcuts-help").classList.toggle("visible");
-  } else if (e.key >= "1" && e.key <= "3") {
-    const rating = parseInt(e.key);
-    updateStarRating(rating);
-  }
-});
+// document.addEventListener("keydown", (e) => {
+//   if (e.key === "?") {
+//     document.querySelector(".shortcuts-help").classList.toggle("visible");
+//   } else if (e.key >= "1" && e.key <= "3") {
+//     const rating = parseInt(e.key);
+//     updateStarRating(rating);
+//   }
+// });
 
 // Initialize features
 //studyTimer.start();
