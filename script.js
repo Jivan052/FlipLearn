@@ -38,14 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleQuizMode(); // it hide answer input box and show answer btn initially
   };
   favoriteStar.addEventListener("click", () => {
-    let currentCard = flashcards[currentIndex];
-    if(currentCard.favorite){
-      currentCard.favorite = false;
-    }else{
-      currentCard.favorite = true
+    if(filteredFlashcards.length > 0){
+        let currentCard = filteredFlashcards[currentIndex];
+        if(currentCard.favorite){
+          currentCard.favorite = false;
+        }else{
+          currentCard.favorite = true
+        }
+        saveToLocalStorage();
+        updateUI();
     }
-    saveToLocalStorage();
-    updateUI();
   })
   const colorPicker = document.createElement("div");
   colorPicker.className = "color-theme-picker";
@@ -152,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer = document.getElementById("answer").value;
     const bgColor = document.getElementById("card-bg-color").value;
     const textColor = document.getElementById("card-text-color").value;
-
     const newCard = {
       category,
       question,
@@ -285,7 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
       categoryTag.textContent = "Empty";
       categoryTag.classList.add("empty-span")
       cardCount.textContent = "0/0";
-
       // Set default theme
       setCardTheme(defaultTheme);
     } else {
@@ -524,7 +524,9 @@ document.getElementById("importBtn").addEventListener("click", () => {
   updateUI();
 });
 // Add to script.js
-document.addEventListener("keydown", (e) => {
+var mainContent = document.querySelector("#main-content")
+mainContent.addEventListener("keydown", (e) => {
+e.preventDefault();
   switch (e.key) {
     case "ArrowLeft":
       prevBtn.click();
@@ -610,14 +612,14 @@ function updateStarRating(rating) {
 // }
 
 // Keyboard shortcuts
-document.addEventListener("keydown", (e) => {
-  if (e.key === "?") {
-    document.querySelector(".shortcuts-help").classList.toggle("visible");
-  } else if (e.key >= "1" && e.key <= "3") {
-    const rating = parseInt(e.key);
-    updateStarRating(rating);
-  }
-});
+// document.addEventListener("keydown", (e) => {
+//   if (e.key === "?") {
+//     document.querySelector(".shortcuts-help").classList.toggle("visible");
+//   } else if (e.key >= "1" && e.key <= "3") {
+//     const rating = parseInt(e.key);
+//     updateStarRating(rating);
+//   }
+// });
 
 // Initialize features
 //studyTimer.start();
